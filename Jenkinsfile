@@ -48,7 +48,7 @@ pipeline {
 cp build/libs/*.jar dockerbuild/app.jar
 cp Dockerfile dockerbuild/Dockerfile
 cd dockerbuild/
-docker build -t nucleoteam/neo4jdockeraccountservice:latest ./'''
+docker build -t nucleoteam/eurekaserver:latest ./'''
             script {
               echo "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Built Docker image"
               slackSend color: '#42e565', message: "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Built Docker image"
@@ -173,7 +173,7 @@ docker build -t nucleoteam/neo4jdockeraccountservice:latest ./'''
           slackSend color: '#3e6be8', message: "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Docker image publishing to DockerHub"
         }
 
-        sh 'docker push nucleoteam/neo4jdockeraccountservice:latest'
+        sh 'docker push nucleoteam/eurekaserver:latest'
         script {
           echo "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Docker image published to DockerHub"
           slackSend color: '#42e565', message: "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Docker image published to DockerHub"
@@ -188,7 +188,7 @@ docker build -t nucleoteam/neo4jdockeraccountservice:latest ./'''
           slackSend color: '#3e6be8', message: "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Deploying docker image to Rancher"
         }
 
-        rancher(environmentId: '1a5', ports: '8000:8080', environments: '1i180', confirm: true, image: 'nucleoteam/neo4jdockeraccountservice:latest', service: 'testapp/AccountManager', endpoint: 'http://212.47.248.38:8080/v2-beta', credentialId: 'rancher-server')
+        rancher(environmentId: '1a5', ports: '', environments: '1i409', confirm: true, image: 'nucleoteam/eurekaserver:latest', service: 'testapp/EurekaServer', endpoint: 'http://212.47.248.38:8080/v2-beta', credentialId: 'rancher-server')
         script {
           echo "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Deployed docker image to Rancher"
           slackSend color: '#42e565', message: "[${env.JOB_NAME} ${env.BUILD_NUMBER}] Deployed docker image to Rancher"
