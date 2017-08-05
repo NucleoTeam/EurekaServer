@@ -4,6 +4,8 @@ eureka:
   client:  # Not a client, don't register with yourself
     registerWithEureka: false
     fetchRegistry: false
+  server:
+      enableSelfPreservation: false
   security:
     basic:
       enabled: false
